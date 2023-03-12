@@ -24,6 +24,25 @@ def form():
     return render_template('index.html', currency_list=currency_list)
 
 
-@app.route('/', methods=['POST'])
+@app.route('/calculate', methods=['POST'])
 def calculate():
-    pass
+    currency_from = request.form.get('currency_from')
+    currency_to = request.form.get('currency_to')
+    ammount = request.form.get('ammount')
+
+    url = "https://currency-converter18.p.rapidapi.com/api/v1/convert"
+
+    querystring = {"from":currency_from,"to":currency_to,"amount":ammount}
+
+    headers = {
+        "X-RapidAPI-Key": "d2d13630f3mshd03bcb7dad5af15p184ed1jsn68d86f77b783",
+        "X-RapidAPI-Host": "currency-converter18.p.rapidapi.com"
+    }
+
+    response = requests.request("GET", url, headers=headers, params=querystring)
+
+    data = json.loads(response.text)
+    converted_ammount = data['result']['convertedAmount']
+    formatted = '{:,.2f}'.format(converted_ammount)
+
+    return render_template('index.html', formatted=formatted)

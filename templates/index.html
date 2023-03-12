@@ -9,7 +9,7 @@
 <body>
     <h1>Конвертер валют</h1>
 
-<form method="POST" action="{{ url_for('calculate')}}">
+<form method="POST" action="{{url_for('calculate')}}">
     <div>
         <label>Выберите валюту</label>
         <select name="currency_from" class="form-control">
@@ -29,7 +29,19 @@
             {% endfor %}
         </select>
     </div>
+    <br>
+    <div>
+        <label>Введите сумму</label>
+        <input type="text" name="ammount">
+    </div>
+    <br>
+    <button type="submit">Конвертировать</button>
 </form>
+<br>
+<div>
+    <h2>{{formatted}}</h2>
+</div>
+<button><a href={{url_for('form')}}>Очистить</a></button>
 
 </body>
 </html>
