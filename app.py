@@ -4,7 +4,6 @@ import requests, json
 
 app = Flask(__name__)
 
-
 @app.route('/')
 def form():
     url = "https://currency-converter18.p.rapidapi.com/api/v1/supportedCurrencies"
@@ -28,11 +27,11 @@ def form():
 def calculate():
     currency_from = request.form.get('currency_from')
     currency_to = request.form.get('currency_to')
-    ammount = request.form.get('ammount')
+    amount = request.form.get('amount')
 
     url = "https://currency-converter18.p.rapidapi.com/api/v1/convert"
 
-    querystring = {"from":currency_from,"to":currency_to,"amount":ammount}
+    querystring = {"from":currency_from,"to":currency_to,"amount":amount}
 
     headers = {
         "X-RapidAPI-Key": "d2d13630f3mshd03bcb7dad5af15p184ed1jsn68d86f77b783",
@@ -42,7 +41,8 @@ def calculate():
     response = requests.request("GET", url, headers=headers, params=querystring)
 
     data = json.loads(response.text)
-    converted_ammount = data['result']['convertedAmount']
-    formatted = '{:,.2f}'.format(converted_ammount)
+    converted_amount = data['result']['convertedAmount']
+    formatted = '{:,.2f}'.format(converted_amount)
 
-    return render_template('index.html', formatted=formatted)
+    return render_template('index.html', formatted=formatted, amount=amount,
+                           currency_from=currency_from, currency_to=currency_to)

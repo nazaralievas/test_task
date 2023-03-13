@@ -32,16 +32,18 @@
     <br>
     <div>
         <label>Введите сумму</label>
-        <input type="text" name="ammount">
+        <input type="text" name="amount">
     </div>
     <br>
     <button type="submit">Конвертировать</button>
 </form>
 <br>
-<div>
-    <h2>{{formatted}}</h2>
-</div>
-<button><a href={{url_for('form')}}>Очистить</a></button>
+{% if formatted %}
+    <div>
+        <h2>{{amount}} {{currency_from}} = {{formatted}} {{currency_to}}</h2>
+    </div>
+    <button><a href={{url_for('form')}}>Очистить</a></button>
+{% endif %}
 
 </body>
 </html>
